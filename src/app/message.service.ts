@@ -1,18 +1,30 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {map, Observable, Subject} from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class MessageService {
   private messageApiUrl = '/api/messages';
 
-  constructor(private httpClient: HttpClient) { }
+  private messagesSubject: Subject<Message[]> = new Subject<Message[]>();
+  messages$: Observable<Message[]> = this.messagesSubject.asObservable();
+  messagesCount$: Observable<number> = this.messagesSubject.pipe(map((messages) => messages.length));
 
-  findAll(): Observable<Message[]> {
-    return this.httpClient.get<Message[]>(this.messageApiUrl);
+  constructor(private httpClient: HttpClient) {
+  }
+
+  findAll(): void {
+    this.httpClient.get<Message[]>(this.messageApiUrl).subscribe(
+      messages => this.messagesSubject.next(messages)
+    );
   }
 
   create(message: Message): Observable<Message> {
-    return this.httpClient.post<Message>(this.messageApiUrl, message);
+    const messageCreated: Subject<Message> = new Subject<Message>();
+    this.httpClient.post<Message>(this.messageApiUrl, message).subscribe((message) => {
+      messageCreated.next(message);
+      this.findAll();
+    });
+    return messageCreated.asObservable();
   }
 }

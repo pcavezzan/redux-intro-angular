@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MessageService} from "./message.service";
-import {EMPTY, map, Observable} from "rxjs";
+import {EMPTY, Observable} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -15,17 +15,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.messages$ = this.messageService.findAll();
-    this.messageCount$ = this.messages$.pipe(
-      map((messages) => messages.length)
-    )
+    this.messages$ = this.messageService.messages$;
+    this.messageCount$ = this.messageService.messagesCount$;
+    this.messageService.findAll();
   }
 
-
-  onMessageCreated() {
-    this.messages$ = this.messageService.findAll();
-    this.messageCount$ = this.messages$.pipe(
-      map((messages) => messages.length)
-    )
-  }
 }
