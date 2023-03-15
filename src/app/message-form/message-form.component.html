@@ -1,0 +1,9 @@
+<form [formGroup]="messageForm" (ngSubmit)="onSubmitMessageForm()">
+
+  <label for="first-name">Contenu: </label>
+  <input id="first-name" type="text" formControlName="content">
+
+  <p>Compléter le formulaire pour pouvoir le soumettre.</p>
+  <button type="submit" [disabled]="!messageForm.valid">Valider</button>
+
+</form>
