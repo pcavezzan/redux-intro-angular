@@ -19,12 +19,9 @@ export class MessageService {
     );
   }
 
-  create(message: Message): Observable<Message> {
-    const messageCreated: Subject<Message> = new Subject<Message>();
+  create(message: Message): void {
     this.httpClient.post<Message>(this.messageApiUrl, message).subscribe((message) => {
-      messageCreated.next(message);
       this.findAll();
     });
-    return messageCreated.asObservable();
   }
 }
