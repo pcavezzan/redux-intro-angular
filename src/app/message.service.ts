@@ -2,6 +2,9 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, distinctUntilChanged, map, Observable} from "rxjs";
 import {AppState, initialAppState} from "./state";
+import {Action, LoadMessageSuccessAction} from "./actions";
+import {reduce} from "./reducer";
+
 
 // AKA: mélange d'un store et side effects
 @Injectable({providedIn: 'root'})
@@ -27,18 +30,16 @@ export class MessageService {
     return this.state$.pipe(map(selector), distinctUntilChanged());
   }
 
-  private setState<K extends keyof AppState, E extends Partial<Pick<AppState, K>>>(fn: (state: AppState) => E): void {
-    const state = fn(this.state);
-    this._state.next({...this.state, ...state});
+  // AKA: dispatch
+  dispatch(action: Action): void {
+    this._state.next(reduce(this.state, action))
   }
 
-
-  // AKA: actions
   findAll(): void {
     // AKA: side effects
     this.httpClient.get<Message[]>(this.messageApiUrl).subscribe(messages => {
       // AKA: actions
-      this.onReceiveMessagesSuccess(messages)
+      this.dispatch(new LoadMessageSuccessAction(messages));
     });
   }
 
@@ -51,9 +52,4 @@ export class MessageService {
     });
   }
 
-  // AKA: actions
-  private onReceiveMessagesSuccess(messages: Message[]) {
-    // AKA: setState <=> reducer
-    this.setState((state) => ({messages: messages}))
-  }
 }
