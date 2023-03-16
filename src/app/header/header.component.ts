@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EMPTY, Observable} from "rxjs";
-import {MessageService} from "../message.service";
+import {selectMessageCount} from "../state";
+import {Store} from "../store";
 
 @Component({
   selector: 'app-header',
@@ -10,11 +11,11 @@ import {MessageService} from "../message.service";
 export class HeaderComponent implements OnInit {
   messageCount$: Observable<number> = EMPTY;
 
-  constructor(private messageService: MessageService) {
+  constructor(private store: Store) {
   }
 
   ngOnInit(): void {
-    this.messageCount$ = this.messageService.messagesCount$;
+    this.messageCount$ = this.store.select(selectMessageCount);
   }
 
 }

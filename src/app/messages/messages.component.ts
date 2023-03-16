@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EMPTY, Observable} from "rxjs";
-import {MessageService} from "../message.service";
+import {selectMessages} from "../state";
+import {Store} from "../store";
 
 
 @Component({
@@ -12,11 +13,11 @@ export class MessagesComponent implements OnInit {
 
   messages$: Observable<Message[]> = EMPTY;
 
-  constructor(private messageService: MessageService) {
+  constructor(private store: Store) {
   }
 
   ngOnInit(): void {
-    this.messages$ = this.messageService.messages$;
+    this.messages$ = this.store.select(selectMessages);
   }
 
 }
