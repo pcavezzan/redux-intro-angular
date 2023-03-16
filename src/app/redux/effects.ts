@@ -9,7 +9,7 @@ import {
   LoadMessageAction,
   LoadMessageSuccessAction
 } from "./actions";
-import {MessageService} from "./message.service";
+import {MessageService} from "../message.service";
 
 @Injectable({providedIn: 'root'})
 export class Effects {
@@ -42,7 +42,7 @@ export class Effects {
   createNewMessage$ = (action$: Observable<Action>): Observable<Action> => action$.pipe(
     filter(action => action.type === ActionTypes.CREATE_MESSAGE),
     map(action => action as CreateNewMessageAction),
-    switchMap(action => this.messageService.create(action.payload)),
+    switchMap((action: CreateNewMessageAction) => this.messageService.create(action.payload)),
     map(_ => new CreateNewMessageSuccessAction())
   );
 

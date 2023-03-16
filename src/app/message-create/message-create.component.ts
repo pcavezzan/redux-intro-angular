@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {Store} from "../store";
-import {CreateNewMessageAction} from "../actions";
+import {Store} from "../redux/store";
+import {CreateNewMessageAction} from "../redux/actions";
 
 @Component({
   selector: 'app-message-create',

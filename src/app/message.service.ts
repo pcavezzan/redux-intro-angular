@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Store} from "./store";
 import {Observable} from "rxjs";
 
 
@@ -9,7 +8,7 @@ import {Observable} from "rxjs";
 export class MessageService {
   private messageApiUrl = '/api/messages';
 
-  constructor(private store: Store, private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient) {
   }
 
   findAll(): Observable<Message[]> {

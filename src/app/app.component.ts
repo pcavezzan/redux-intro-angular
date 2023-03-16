@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Store} from "./store";
-import {LoadMessageAction} from "./actions";
+import {Store} from "./redux/store";
+import {LoadMessageAction} from "./redux/actions";
 
 @Component({
   selector: 'app-root',

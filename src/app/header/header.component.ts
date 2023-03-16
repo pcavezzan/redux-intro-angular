@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EMPTY, Observable} from "rxjs";
-import {selectMessageCount} from "../state";
-import {Store} from "../store";
+import {selectMessageCount} from "../redux/state";
+import {Store} from "../redux/store";
 
 @Component({
   selector: 'app-header',
