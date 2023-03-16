@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
@@ -8,6 +8,8 @@ import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MessageCreateComponent} from './message-create/message-create.component';
 import {MessageFormComponent} from './message-form/message-form.component';
+import {bindEffectToStoreAppFactory, Effects} from "./effects";
+import {Store} from "./store";
 
 @NgModule({
   declarations: [
@@ -22,7 +24,14 @@ import {MessageFormComponent} from './message-form/message-form.component';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: bindEffectToStoreAppFactory,
+      deps: [Store, Effects],
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
