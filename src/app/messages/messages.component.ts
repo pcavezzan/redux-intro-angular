@@ -1,4 +1,6 @@
-import {Component, Input} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {EMPTY, Observable} from "rxjs";
+import {MessageService} from "../message.service";
 
 
 @Component({
@@ -6,9 +8,15 @@ import {Component, Input} from '@angular/core';
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.css']
 })
-export class MessagesComponent {
+export class MessagesComponent implements OnInit {
 
-  @Input()
-  messages: Message[] | undefined | null;
+  messages$: Observable<Message[]> = EMPTY;
+
+  constructor(private messageService: MessageService) {
+  }
+
+  ngOnInit(): void {
+    this.messages$ = this.messageService.messages$;
+  }
 
 }

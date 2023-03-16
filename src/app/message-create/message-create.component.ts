@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component} from '@angular/core';
 import {MessageService} from "../message.service";
 
 @Component({
@@ -8,15 +8,10 @@ import {MessageService} from "../message.service";
 })
 export class MessageCreateComponent {
 
-  @Output()
-  messageCreated: EventEmitter<Message> = new EventEmitter<Message>();
-
   constructor(private messageService: MessageService) {
   }
 
   onSubmitMessage(message: Message) {
-    this.messageService.create(message).subscribe((message) => {
-      this.messageCreated.emit(message)
-    });
+    this.messageService.create(message);
   }
 }
