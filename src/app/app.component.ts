@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {MessageService} from "./message.service";
+import {Store} from "./redux/store";
+import {LoadMessageAction} from "./redux/actions";
 
 @Component({
   selector: 'app-root',
@@ -8,11 +9,11 @@ import {MessageService} from "./message.service";
 })
 export class AppComponent implements OnInit {
 
-  constructor(private messageService: MessageService) {
+  constructor(private store: Store) {
   }
 
   ngOnInit(): void {
-    this.messageService.findAll();
+    this.store.dispatch(new LoadMessageAction())
   }
 
 }

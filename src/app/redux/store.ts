@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, distinctUntilChanged, map, Observable} from "rxjs";
+import {BehaviorSubject, distinctUntilChanged, map, Observable, Subject} from "rxjs";
 import {AppState, initialAppState} from "./state";
 import {Action} from "./actions";
 import {reduce} from "./reducer";
@@ -15,9 +15,14 @@ export class Store {
 
   // AKA: state
   private _state: BehaviorSubject<AppState> = new BehaviorSubject<AppState>(initialAppState);
+  private _actions: Subject<Action> = new Subject<Action>();
 
   private get state(): AppState {
     return this._state.getValue();
+  }
+
+  get actions$(): Observable<Action> {
+    return this._actions.asObservable();
   }
 
   select<K>(selector: (state: AppState) => K): Observable<K> {
@@ -27,6 +32,7 @@ export class Store {
   // AKA: dispatch
   dispatch(action: Action): void {
     this._state.next(reduce(this.state, action))
+    this._actions.next(action);
   }
 
 

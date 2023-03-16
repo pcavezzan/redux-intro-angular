@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
-import {MessageService} from "../message.service";
+import {Store} from "../redux/store";
+import {CreateNewMessageAction} from "../redux/actions";
 
 @Component({
   selector: 'app-message-create',
@@ -8,10 +9,10 @@ import {MessageService} from "../message.service";
 })
 export class MessageCreateComponent {
 
-  constructor(private messageService: MessageService) {
+  constructor(private store: Store) {
   }
 
   onSubmitMessage(message: Message) {
-    this.messageService.create(message);
+    this.store.dispatch(new CreateNewMessageAction(message));
   }
 }
