@@ -1,21 +1,37 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {map, Observable, Subject} from "rxjs";
+import {BehaviorSubject, distinctUntilChanged, map, Observable} from "rxjs";
+import {AppState, initialAppState} from "./state";
 
 // AKA: mélange d'un store et side effects
 @Injectable({providedIn: 'root'})
 export class MessageService {
   private messageApiUrl = '/api/messages';
 
-  // AKA: state
-  private messagesSubject: Subject<Message[]> = new Subject<Message[]>();
-
-  // AKA: selectors
-  messages$: Observable<Message[]> = this.messagesSubject.asObservable();
-  messagesCount$: Observable<number> = this.messagesSubject.pipe(map((messages) => messages.length));
-
   constructor(private httpClient: HttpClient) {
   }
+
+  // AKA: selectors
+  get state$(): Observable<AppState> {
+    return this._state.asObservable();
+  }
+
+  // AKA: state
+  private _state: BehaviorSubject<AppState> = new BehaviorSubject<AppState>(initialAppState);
+
+  private get state(): AppState {
+    return this._state.getValue();
+  }
+
+  select<K>(selector: (state: AppState) => K): Observable<K> {
+    return this.state$.pipe(map(selector), distinctUntilChanged());
+  }
+
+  private setState<K extends keyof AppState, E extends Partial<Pick<AppState, K>>>(fn: (state: AppState) => E): void {
+    const state = fn(this.state);
+    this._state.next({...this.state, ...state});
+  }
+
 
   // AKA: actions
   findAll(): void {
@@ -38,6 +54,6 @@ export class MessageService {
   // AKA: actions
   private onReceiveMessagesSuccess(messages: Message[]) {
     // AKA: setState <=> reducer
-    this.messagesSubject.next(messages);
+    this.setState((state) => ({messages: messages}))
   }
 }

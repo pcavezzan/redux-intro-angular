@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EMPTY, Observable} from "rxjs";
 import {MessageService} from "../message.service";
+import {selectMessages} from "../state";
 
 
 @Component({
@@ -16,7 +17,7 @@ export class MessagesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.messages$ = this.messageService.messages$;
+    this.messages$ = this.messageService.select(selectMessages);
   }
 
 }
