@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {Store} from "../redux/store";
-import {CreateNewMessageAction} from "../redux/actions";
+import {Store} from "@ngrx/store";
+import {createMessageAction} from "../ngrx/actions";
 
 @Component({
   selector: 'app-message-create',
@@ -13,6 +13,6 @@ export class MessageCreateComponent {
   }
 
   onSubmitMessage(message: Message) {
-    this.store.dispatch(new CreateNewMessageAction(message));
+    this.store.dispatch(createMessageAction({ message }));
   }
 }
