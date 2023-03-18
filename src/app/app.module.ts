@@ -13,6 +13,7 @@ import {appReducer} from "./ngrx/reducer";
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import {Effects} from "./ngrx/effects";
+import {environment} from "../environments/environment";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import {Effects} from "./ngrx/effects";
     StoreModule.forRoot({
       app: appReducer
     }),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    ...[ environment.devMode ? StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }) : []],
     EffectsModule.forRoot([Effects]),
   ],
   providers: [],
