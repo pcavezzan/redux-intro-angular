@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EMPTY, Observable} from "rxjs";
-import {selectMessages} from "../redux/state";
-import {Store} from "../redux/store";
+import {Store} from "@ngrx/store";
+import {selectMessages} from "../ngrx/state";
 
 
 @Component({

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Store} from "./redux/store";
-import {LoadMessageAction} from "./redux/actions";
+import {Store} from "@ngrx/store";
+import {loadMessageAction} from "./ngrx/actions";
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new LoadMessageAction())
+    this.store.dispatch(loadMessageAction());
   }
 
 }

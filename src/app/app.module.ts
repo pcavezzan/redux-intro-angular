@@ -1,4 +1,4 @@
-import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {NgModule, isDevMode} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
@@ -8,8 +8,11 @@ import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MessageCreateComponent} from './message-create/message-create.component';
 import {MessageFormComponent} from './message-form/message-form.component';
-import {bindEffectToStoreAppFactory, Effects} from "./redux/effects";
-import {Store} from "./redux/store";
+import { StoreModule } from '@ngrx/store';
+import {appReducer} from "./ngrx/reducer";
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import {Effects} from "./ngrx/effects";
 
 @NgModule({
   declarations: [
@@ -23,15 +26,13 @@ import {Store} from "./redux/store";
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
+    StoreModule.forRoot({
+      app: appReducer
+    }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    EffectsModule.forRoot([Effects]),
   ],
-  providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: bindEffectToStoreAppFactory,
-      deps: [Store, Effects],
-      multi: true
-    }
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
