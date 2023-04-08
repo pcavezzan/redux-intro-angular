@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "concurrently \"npm run server:dev\" \"npm run start:dev\"",
     "start:dev": "ng serve",
-    "server:dev": "json-server server/db.json --routes server/routes.json",
+    "server:dev": "json-server ../server/index.js --routes ../server/routes.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
