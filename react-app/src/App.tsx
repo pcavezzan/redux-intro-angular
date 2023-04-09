@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Header} from "./Header";
 import {Messages} from "./Messages";
 import {MessageCreate} from "./MessageCreate";
+import {getMessages} from "./http-api.service";
 
 function App() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -10,6 +11,14 @@ function App() {
   const onMessageSubmitForm = (message: Message) => {
     setMessages(() => [...messages, message]);
   };
+
+  useEffect(() => {
+    getMessages()
+      .then((messages) => {
+        console.log(messages);
+        setMessages(messages)
+      });
+  }, [])
 
   return (
     <div className="App">
