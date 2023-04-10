@@ -9,7 +9,6 @@ import {createMessageAction, createMessageSuccessAction, loadMessageAction, load
 export class Effects {
 
   loadMessages$: Observable<Action> = createEffect(() => this.actions$.pipe(
-    tap((action) => console.log(action)),
     ofType(loadMessageAction.type),
     switchMap(() => this.messagesService.findAll()),
     map((messages) => loadMessageSuccessAction({messages}))
