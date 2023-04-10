@@ -3,21 +3,24 @@ import './App.css';
 import {Header} from "./Header";
 import {Messages} from "./Messages";
 import {MessageCreate} from "./MessageCreate";
-import {getMessages} from "./http-api.service";
+import {createMessage, findAllMessages} from "./http-api.service";
 
 function App() {
   const [messages, setMessages] = useState<Message[]>([]);
   const nbMessages = messages.length;
   const onMessageSubmitForm = (message: Message) => {
-    setMessages(() => [...messages, message]);
+    (async () => {
+      await createMessage(message);
+      const messages = await findAllMessages();
+      setMessages(messages);
+    })();
   };
 
   useEffect(() => {
-    getMessages()
-      .then((messages) => {
-        console.log(messages);
-        setMessages(messages)
-      });
+    (async () => {
+      const messages = await findAllMessages();
+      setMessages(messages);
+    })();
   }, [])
 
   return (

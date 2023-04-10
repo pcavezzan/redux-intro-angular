@@ -5,7 +5,7 @@ export const Messages: FunctionComponent<{ messages: Message[] }> = ({messages})
     <>
       <p>messages</p>
       <ul>
-        {messages.map((message) => (<li>{message.content}</li>))}
+        {messages.map((message) => (<li key={message.id}>{message.content}</li>))}
       </ul>
     </>
   );
