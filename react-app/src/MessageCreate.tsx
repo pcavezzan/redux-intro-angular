@@ -1,12 +1,15 @@
-import {ChangeEvent, FormEvent, FunctionComponent, useState} from "react";
+import { ChangeEvent, FormEvent, FunctionComponent, useState } from "react";
+import { useMessages } from "./use-messages.hook";
 
-export const MessageCreate: FunctionComponent<{ messageSubmitForm: (message: Message) => void }> = ({messageSubmitForm}) => {
+const MessageCreateFormComponent: FunctionComponent<{
+  messageSubmitForm: (message: Message) => void
+}> = ({ messageSubmitForm }) => {
   const [content, setContent] = useState('');
 
   const onSubmitMessageForm = (e: FormEvent) => {
     e.preventDefault();
     setContent('');
-    messageSubmitForm({content});
+    messageSubmitForm({ content });
   };
 
   const handleContentChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -21,5 +24,14 @@ export const MessageCreate: FunctionComponent<{ messageSubmitForm: (message: Mes
       <button type="submit">Valider</button>
 
     </form>
+  );
+};
+
+
+export const MessageCreate: FunctionComponent = () => {
+  const { onMessageSubmitForm } = useMessages();
+
+  return (
+    <MessageCreateFormComponent messageSubmitForm={onMessageSubmitForm}></MessageCreateFormComponent>
   );
 };
