@@ -1,6 +1,7 @@
-import {FunctionComponent} from "react";
+import { FunctionComponent } from "react";
+import { useMessages } from "./MessagesContextProvider";
 
-export const Messages: FunctionComponent<{ messages: Message[] }> = ({messages}) => {
+const MessageListComponent: FunctionComponent<{ messages: Message[] }> = ({ messages }) => {
   return (
     <>
       <p>messages</p>
@@ -8,5 +9,12 @@ export const Messages: FunctionComponent<{ messages: Message[] }> = ({messages})
         {messages.map((message) => (<li key={message.id}>{message.content}</li>))}
       </ul>
     </>
+  );
+};
+
+export const Messages: FunctionComponent = () => {
+  const {messages} = useMessages();
+  return (
+    <MessageListComponent messages={messages}></MessageListComponent>
   );
 };

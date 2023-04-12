@@ -1,19 +1,18 @@
 import React from 'react';
 import './App.css';
-import {Header} from "./Header";
-import {Messages} from "./Messages";
-import {MessageCreate} from "./MessageCreate";
-import {useMessages} from "./use-messages.hook";
+import { Header } from "./Header";
+import { Messages } from "./Messages";
+import { MessageCreate } from "./MessageCreate";
+import { MessageContextProvider } from "./MessagesContextProvider";
 
 function App() {
-  const {messages, onMessageSubmitForm} = useMessages();
-  const nbMessages = messages.length;
-
   return (
     <div className="App">
-      <Header messageCount={nbMessages}/>
-      <Messages messages={messages}/>
-      <MessageCreate messageSubmitForm={onMessageSubmitForm}/>
+      <MessageContextProvider>
+        <Header/>
+        <Messages/>
+        <MessageCreate/>
+      </MessageContextProvider>
     </div>
   );
 }
