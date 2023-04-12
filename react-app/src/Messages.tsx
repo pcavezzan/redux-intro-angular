@@ -1,7 +1,7 @@
-import {FunctionComponent} from "react";
-import { useMessages } from "./use-messages.hook";
+import { FunctionComponent } from "react";
+import { useMessages } from "./MessagesContextProvider";
 
-const MessageListComponent: FunctionComponent<{ messages: Message[] }> = ({messages}) => {
+const MessageListComponent: FunctionComponent<{ messages: Message[] }> = ({ messages }) => {
   return (
     <>
       <p>messages</p>

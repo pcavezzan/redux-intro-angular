@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, FunctionComponent, useState } from "react";
-import { useMessages } from "./use-messages.hook";
+import { useMessages } from "./MessagesContextProvider";
 
 const MessageCreateFormComponent: FunctionComponent<{
   messageSubmitForm: (message: Message) => void
@@ -29,9 +29,9 @@ const MessageCreateFormComponent: FunctionComponent<{
 
 
 export const MessageCreate: FunctionComponent = () => {
-  const { onMessageSubmitForm } = useMessages();
+  const { messageCreateSubmitForm } = useMessages();
 
   return (
-    <MessageCreateFormComponent messageSubmitForm={onMessageSubmitForm}></MessageCreateFormComponent>
+    <MessageCreateFormComponent messageSubmitForm={messageCreateSubmitForm}></MessageCreateFormComponent>
   );
 };

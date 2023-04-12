@@ -1,7 +1,7 @@
-import {FunctionComponent} from "react";
-import { useMessages } from "./use-messages.hook";
+import { FunctionComponent } from "react";
+import { useMessages } from "./MessagesContextProvider";
 
-const MessageCountComponent: FunctionComponent<{ messageCount: number }> = ({messageCount}) => {
+const MessageCountComponent: FunctionComponent<{ messageCount: number }> = ({ messageCount }) => {
   return (
     <p>
       Vous avez {messageCount} messages
