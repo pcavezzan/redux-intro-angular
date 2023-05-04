@@ -1,7 +1,8 @@
-import { FunctionComponent } from "react";
-import { useMessages } from "./MessagesContextProvider";
+import { FunctionComponent } from 'react';
+import { useSelector } from 'react-redux';
+import { selectMessages } from './redux/Store';
 
-const MessageListComponent: FunctionComponent<{ messages: Message[] }> = ({ messages }) => {
+const MessageListComponent: FunctionComponent<{ messages: Message[] }> = ({messages}) => {
   return (
     <>
       <p>messages</p>
@@ -13,7 +14,7 @@ const MessageListComponent: FunctionComponent<{ messages: Message[] }> = ({ mess
 };
 
 export const Messages: FunctionComponent = () => {
-  const {messages} = useMessages();
+  const messages = useSelector(selectMessages);
   return (
     <MessageListComponent messages={messages}></MessageListComponent>
   );

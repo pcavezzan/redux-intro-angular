@@ -1,18 +1,18 @@
-import { FunctionComponent } from "react";
-import { useMessages } from "./MessagesContextProvider";
+import { FunctionComponent } from 'react';
+import { useSelector } from 'react-redux';
+import { selectMessageCount } from './redux/Store';
 
-const MessageCountComponent: FunctionComponent<{ messageCount: number }> = ({ messageCount }) => {
+const MessageCountComponent: FunctionComponent<{ messageCount: number }> = ({messageCount}) => {
   return (
     <p>
       Vous avez {messageCount} messages
     </p>
-  )
+  );
 };
 
 
 export const Header: FunctionComponent = () => {
-  const {messages} = useMessages();
-  const messageCount = messages.length;
+  const messageCount = useSelector(selectMessageCount);
   return (
     <MessageCountComponent messageCount={messageCount}></MessageCountComponent>
   )
