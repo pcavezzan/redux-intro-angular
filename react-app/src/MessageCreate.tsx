@@ -1,15 +1,16 @@
-import { ChangeEvent, FormEvent, FunctionComponent, useState } from "react";
-import { useMessages } from "./MessagesContextProvider";
+import { ChangeEvent, FormEvent, FunctionComponent, useState } from 'react';
+import { CREATE_MESSAGE } from './redux/Actions';
+import { useDispatch } from 'react-redux';
 
 const MessageCreateFormComponent: FunctionComponent<{
   messageSubmitForm: (message: Message) => void
-}> = ({ messageSubmitForm }) => {
+}> = ({messageSubmitForm}) => {
   const [content, setContent] = useState('');
 
   const onSubmitMessageForm = (e: FormEvent) => {
     e.preventDefault();
     setContent('');
-    messageSubmitForm({ content });
+    messageSubmitForm({content});
   };
 
   const handleContentChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +30,10 @@ const MessageCreateFormComponent: FunctionComponent<{
 
 
 export const MessageCreate: FunctionComponent = () => {
-  const { messageCreateSubmitForm } = useMessages();
+  const dispatch = useDispatch();
+  const messageCreateSubmitForm = (message: Message) => {
+    dispatch({type: CREATE_MESSAGE, payload: message});
+  };
 
   return (
     <MessageCreateFormComponent messageSubmitForm={messageCreateSubmitForm}></MessageCreateFormComponent>

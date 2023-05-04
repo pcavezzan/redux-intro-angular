@@ -1,18 +1,19 @@
 import React from 'react';
 import './App.css';
-import { Header } from "./Header";
-import { Messages } from "./Messages";
-import { MessageCreate } from "./MessageCreate";
-import { MessageContextProvider } from "./MessagesContextProvider";
+import { Header } from './Header';
+import { Messages } from './Messages';
+import { MessageCreate } from './MessageCreate';
+import { useDispatch } from 'react-redux';
+import { LOAD_MESSAGES } from './redux/Actions';
 
 function App() {
+  const dispatch = useDispatch();
+  dispatch({type: LOAD_MESSAGES});
   return (
     <div className="App">
-      <MessageContextProvider>
-        <Header/>
-        <Messages/>
-        <MessageCreate/>
-      </MessageContextProvider>
+      <Header/>
+      <Messages/>
+      <MessageCreate/>
     </div>
   );
 }
