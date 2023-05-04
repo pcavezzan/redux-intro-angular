@@ -4,7 +4,7 @@ import { Header } from './Header';
 import { Messages } from './Messages';
 import { MessageCreate } from './MessageCreate';
 import { useDispatch } from 'react-redux';
-import { LOAD_MESSAGES } from './redux/Actions';
+import { LOAD_MESSAGES } from './redux/actions';
 
 function App() {
   const dispatch = useDispatch();

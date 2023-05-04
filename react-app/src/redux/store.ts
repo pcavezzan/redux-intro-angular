@@ -1,9 +1,9 @@
 import { applyMiddleware, createStore } from 'redux';
-import { messagesReducer } from './Reducer';
-import { messagesMiddlewares } from './Middleware';
+import { messagesReducer } from './reducer';
+import { messagesMiddlewares } from './middleware';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-const middlewareEnhancer = applyMiddleware(...messagesMiddlewares)
+const middlewareEnhancer = applyMiddleware(...messagesMiddlewares);
 export const rootStoreEnhancer = composeWithDevTools(middlewareEnhancer);
 export const store = createStore(messagesReducer, rootStoreEnhancer);
 // Infer the `RootState` and `AppDispatch` types from the store itself

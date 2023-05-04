@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, FunctionComponent, useState } from 'react';
-import { CREATE_MESSAGE } from './redux/Actions';
+import { CREATE_MESSAGE } from './redux/actions';
 import { useDispatch } from 'react-redux';
 
 const MessageCreateFormComponent: FunctionComponent<{

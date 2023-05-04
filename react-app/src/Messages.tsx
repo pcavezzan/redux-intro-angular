@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
-import { selectMessages } from './redux/Store';
+import { selectMessages } from './redux/store';
 
 const MessageListComponent: FunctionComponent<{ messages: Message[] }> = ({messages}) => {
   return (

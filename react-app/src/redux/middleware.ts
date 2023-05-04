@@ -1,13 +1,14 @@
-import { Action, Dispatch, Middleware, MiddlewareAPI } from "redux";
+import { Action, Dispatch, Middleware, MiddlewareAPI } from 'redux';
 import {
-  CREATE_MESSAGE, CREATE_MESSAGE_SUCCESS,
+  CREATE_MESSAGE,
+  CREATE_MESSAGE_SUCCESS,
   CreateNewMessageAction,
   LOAD_MESSAGES,
   LOAD_MESSAGES_SUCCESS,
   LoadMessageSuccessAction,
   MessageAction
-} from "./Actions";
-import {createMessage, findAllMessages} from "../http-api.service";
+} from './actions';
+import { createMessage, findAllMessages } from '../http-api.service';
 
 export const messageApiMiddleware: Middleware<MiddlewareAPI, MessageAction, Dispatch<Action>> = (store: MiddlewareAPI) => (next: Dispatch) => (action: Action) => {
   const nextAction = next(action);

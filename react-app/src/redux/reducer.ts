@@ -1,5 +1,5 @@
-import { AppState, initialAppState } from "./State";
-import { LOAD_MESSAGES_SUCCESS, MessageAction } from "./Actions";
+import { AppState, initialAppState } from './state';
+import { LOAD_MESSAGES_SUCCESS, MessageAction } from './actions';
 
 export const messagesReducer = (state: AppState = initialAppState, action: MessageAction): AppState => {
   switch (action.type) {
