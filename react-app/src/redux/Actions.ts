@@ -3,13 +3,13 @@ export const LOAD_MESSAGES_SUCCESS = '[Global] messages loaded';
 export const CREATE_MESSAGE = '[Message] create new message';
 export const CREATE_MESSAGE_SUCCESS = '[Message] create new message success';
 
+export interface LoadMessageAction {
+  readonly type: typeof LOAD_MESSAGES;
+}
+
 export interface LoadMessageSuccessAction {
   readonly type: typeof LOAD_MESSAGES_SUCCESS;
   readonly payload: Message[];
-}
-
-export interface LoadMessageAction {
-  readonly type: typeof LOAD_MESSAGES;
 }
 
 export interface CreateNewMessageAction {

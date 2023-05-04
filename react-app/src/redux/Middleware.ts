@@ -1,6 +1,13 @@
 import { Action, Dispatch, Middleware, MiddlewareAPI } from "redux";
-import { LOAD_MESSAGES, LOAD_MESSAGES_SUCCESS, LoadMessageSuccessAction, MessageAction } from "./Actions";
-import { findAllMessages } from "../http-api.service";
+import {
+  CREATE_MESSAGE, CREATE_MESSAGE_SUCCESS,
+  CreateNewMessageAction,
+  LOAD_MESSAGES,
+  LOAD_MESSAGES_SUCCESS,
+  LoadMessageSuccessAction,
+  MessageAction
+} from "./Actions";
+import {createMessage, findAllMessages} from "../http-api.service";
 
 export const messageApiMiddleware: Middleware<MiddlewareAPI, MessageAction, Dispatch<Action>> = (store: MiddlewareAPI) => (next: Dispatch) => (action: Action) => {
   const nextAction = next(action);
@@ -11,7 +18,14 @@ export const messageApiMiddleware: Middleware<MiddlewareAPI, MessageAction, Disp
           type: LOAD_MESSAGES_SUCCESS,
           payload: messages
         }))
-        .then(action => store.dispatch(action))
+        .then(action => store.dispatch(action));
+      break;
+    case CREATE_MESSAGE:
+      createMessage((action as CreateNewMessageAction).payload)
+        .then(() => store.dispatch(({ type: CREATE_MESSAGE_SUCCESS })));
+      break;
+    case CREATE_MESSAGE_SUCCESS:
+      store.dispatch({type: LOAD_MESSAGES});
       break;
     default:
       break;
