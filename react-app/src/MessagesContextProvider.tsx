@@ -4,11 +4,11 @@ import {
   FunctionComponent,
   PropsWithChildren,
   useCallback,
-  useContext,
-  useEffect,
-  useState
+  useContext, useEffect
 } from "react";
-import { createMessage, findAllMessages } from "./http-api.service";
+import {useDispatch, useSelector} from "react-redux";
+import {selectMessages} from "./redux/Store";
+import {CREATE_MESSAGE, LOAD_MESSAGES} from "./redux/Actions";
 
 interface MessageContextData {
   messages: Message[];
@@ -22,20 +22,14 @@ const MessageContext: Context<MessageContextData> = createContext({
 });
 
 export const MessageContextProvider: FunctionComponent<PropsWithChildren> = ({ children }) => {
-  const [messages, setMessages] = useState<Message[]>([]);
-
+  const dispatch = useDispatch();
+  const messages = useSelector(selectMessages);
   useEffect(() => {
-    (async () => {
-      const messages = await findAllMessages();
-      setMessages(messages);
-    })();
-  }, [])
-
-  const messageCreateSubmitForm = useCallback(async (message: Message) => {
-    await createMessage(message);
-    const messages = await findAllMessages();
-    setMessages(() => messages);
-  }, []);
+    dispatch({type: LOAD_MESSAGES});
+  }, [dispatch])
+  const messageCreateSubmitForm = useCallback((message: Message) => {
+    dispatch({ type: CREATE_MESSAGE, payload: message });
+  }, [dispatch]);
   const messageContext = { messages, messageCreateSubmitForm };
 
   return (
