@@ -3,22 +3,21 @@ import './App.css';
 import { Header } from './Header';
 import { Messages } from './Messages';
 import { MessageCreate } from './MessageCreate';
-import { useDispatch } from 'react-redux';
-import { LOAD_MESSAGES } from './redux/actions';
+import { useAppDispatch } from './store/hooks';
+import { loadMessagesAsync } from './store/messages/messages.slice';
 
 function App() {
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch({type: LOAD_MESSAGES});
-    }, []);
-
-    return (
-            <div className="App">
-                <Header/>
-                <Messages/>
-                <MessageCreate/>
-            </div>
-    );
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+      dispatch(loadMessagesAsync());
+  },[]);
+  return (
+    <div className="App">
+      <Header/>
+      <Messages/>
+      <MessageCreate/>
+    </div>
+  );
 }
 
 export default App;
