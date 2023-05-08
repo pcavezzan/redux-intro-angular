@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import { useAppSelector } from './store/hooks';
-import { selectMessageCount } from './store/messages/messages.slice';
+import { selectMessageCount } from './store/messages/messages.state';
 
 const MessageCountComponent: FunctionComponent<{ messageCount: number }> = ({messageCount}) => {
   return (

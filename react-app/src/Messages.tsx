@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
-import { selectMessages } from './store/messages/messages.slice';
 import { useAppSelector } from './store/hooks';
+import { selectMessages } from './store/messages/messages.state';
 
 const MessageListComponent: FunctionComponent<{ messages: Message[] }> = ({messages}) => {
   return (

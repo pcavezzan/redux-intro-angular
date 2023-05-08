@@ -4,12 +4,12 @@ import { Header } from './Header';
 import { Messages } from './Messages';
 import { MessageCreate } from './MessageCreate';
 import { useAppDispatch } from './store/hooks';
-import { loadMessagesAsync } from './store/messages/messages.slice';
+import { loadMessagesAction } from './store/messages/messages.actions';
 
 function App() {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(loadMessagesAsync());
+    dispatch(loadMessagesAction());
   }, []);
   return (
     <div className="App">
