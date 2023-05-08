@@ -9,8 +9,8 @@ import { loadMessagesAsync } from './store/messages/messages.slice';
 function App() {
   const dispatch = useAppDispatch();
   useEffect(() => {
-      dispatch(loadMessagesAsync());
-  },[]);
+    dispatch(loadMessagesAsync());
+  }, []);
   return (
     <div className="App">
       <Header/>
