@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, FunctionComponent, useState } from 'react';
-import { CREATE_MESSAGE } from './redux/actions';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from './store/hooks';
+import { createMessageAsync } from './store/messages/messages.slice';
 
 const MessageCreateFormComponent: FunctionComponent<{
   messageSubmitForm: (message: Message) => void
@@ -30,9 +30,9 @@ const MessageCreateFormComponent: FunctionComponent<{
 
 
 export const MessageCreate: FunctionComponent = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const messageCreateSubmitForm = (message: Message) => {
-    dispatch({type: CREATE_MESSAGE, payload: message});
+    dispatch(createMessageAsync(message));
   };
 
   return (

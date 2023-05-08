@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
-import { useSelector } from 'react-redux';
-import { selectMessages } from './redux/store';
+import { selectMessages } from './store/messages/messages.slice';
+import { useAppSelector } from './store/hooks';
 
 const MessageListComponent: FunctionComponent<{ messages: Message[] }> = ({messages}) => {
   return (
@@ -14,7 +14,7 @@ const MessageListComponent: FunctionComponent<{ messages: Message[] }> = ({messa
 };
 
 export const Messages: FunctionComponent = () => {
-  const messages = useSelector(selectMessages);
+  const messages = useAppSelector(selectMessages);
   return (
     <MessageListComponent messages={messages}></MessageListComponent>
   );
