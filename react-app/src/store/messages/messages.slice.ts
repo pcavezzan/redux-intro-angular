@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
 import { createMessage, findAllMessages } from '../../http-api.service';
 import { RootState } from '../store';
 
@@ -54,8 +54,15 @@ const messagesSlice = createSlice({
   }
 });
 
-export const selectMessages = (state: RootState) => state.messages.messages;
-export const selectMessageCount = (state: RootState) => state.messages.messages.length;
+const selectMessagesState = (state: RootState) => state.messages;
+export const selectMessages = createSelector(
+  selectMessagesState,
+  (state) => state.messages
+);
+export const selectMessageCount = createSelector(
+  selectMessages,
+  (messages) => messages.length
+);
 
 
 export default messagesSlice.reducer;
