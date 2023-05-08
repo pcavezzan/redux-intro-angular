@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, FunctionComponent, useState } from 'react';
 import { useAppDispatch } from './store/hooks';
-import { createMessageAsync } from './store/messages/messages.slice';
+import { createMessageAction } from './store/messages/messages.actions';
 
 const MessageCreateFormComponent: FunctionComponent<{
   messageSubmitForm: (message: Message) => void
@@ -32,7 +32,7 @@ const MessageCreateFormComponent: FunctionComponent<{
 export const MessageCreate: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const messageCreateSubmitForm = (message: Message) => {
-    dispatch(createMessageAsync(message));
+    dispatch(createMessageAction(message));
   };
 
   return (
