@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { createMessage, findAllMessages } from '../../http-api.service';
+import { RootState } from '../store';
 
 export const LOAD_MESSAGES = 'messages/load messages';
 export const CREATE_MESSAGE = 'messages/create new message';
@@ -29,9 +30,9 @@ export const loadMessagesAsync = createAsyncThunk(
 
 export const createMessageAsync = createAsyncThunk(
   CREATE_MESSAGE,
-  async (message: Message) => {
+  async (message: Message, thunkAPI) => {
     await createMessage(message);
-    return LOAD_MESSAGES;
+    thunkAPI.dispatch(loadMessagesAsync());
   }
 );
 
@@ -53,8 +54,8 @@ const messagesSlice = createSlice({
   }
 });
 
-export const selectMessages = (state: MessagesState) => state.messages;
-export const selectMessageCount = (state: MessagesState) => state.messages.length;
+export const selectMessages = (state: RootState) => state.messages.messages;
+export const selectMessageCount = (state: RootState) => state.messages.messages.length;
 
 
 export default messagesSlice.reducer;
