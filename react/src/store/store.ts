@@ -1,18 +1,24 @@
-import { configureStore } from '@reduxjs/toolkit';
-import createSagaMiddleware from 'redux-saga';
+import { configureStore, Store } from '@reduxjs/toolkit';
 import { rootReducer } from './reducer';
-import rootSaga from './saga';
+import { createEpicMiddleware } from 'redux-observable';
+import { rootEpics } from './epics';
+import { MessagesState } from './messages/messages.state';
+import { MessageActions } from './messages/messages.actions';
 
-// create the saga middleware
-const sagaMiddleware = createSagaMiddleware();
+export type RootActions = MessageActions;
 
-export const store = configureStore({
+export interface RootState {
+  messages: MessagesState;
+}
+
+
+const epicMiddleware = createEpicMiddleware<RootActions, RootActions, RootState>();
+
+export const store: Store<RootState, RootActions> = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware)
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(epicMiddleware)
 });
-// then run the saga
-sagaMiddleware.run(rootSaga);
 
+epicMiddleware.run(rootEpics);
 
 export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
